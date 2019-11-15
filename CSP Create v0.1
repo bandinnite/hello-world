@@ -1,0 +1,118 @@
+import Tkinter as tk
+root = tk.Tk()
+root.wm_title('Dungeon Explorer')
+editor = tk.Text(root, width=75)
+editor.grid(column=0, row=0, columnspan=3)
+w = tk.Canvas(root, width=200, height=387, background='#F0F0F0')
+w.grid(column=3, row=0, columnspan=1)
+pmhp = 100
+php = 100
+patk = 100
+preg = 20
+parm = 5
+emhp = 100
+ehp = 100
+eatk = 20
+earm = 0 
+edead = 0
+pdead = 0
+turn = 0
+enemy = 'rat'
+def start():
+    global pmhp
+    global php
+    global patk
+    global preg
+    global parm
+    global emhp
+    global ehp 
+    global eatk
+    global earm
+    global turn
+    pmhp = 100
+    php = 100
+    patk = 100
+    preg = 20
+    parm = 5
+    emhp = 100
+    ehp = 100
+    eatk = 20
+    earm = 0
+    editor.insert(tk.END, 'your health is '+str(php)+'\n')
+    editor.insert(tk.END, 'your maximum health is '+str(pmhp)+'\n')
+    editor.insert(tk.END, 'your attack is '+str(patk)+'\n')
+    editor.insert(tk.END, 'your health regeneration is '+str(preg)+'\n')
+    editor.insert(tk.END, 'your armour is '+str(parm)+'\n')
+    editor.insert(tk.END, 'the '+enemy+' health is '+str(ehp)+'\n')
+    editor.insert(tk.END, 'the '+enemy+' max health is '+str(emhp)+'\n')
+    editor.insert(tk.END, 'the '+enemy+' attack is '+str(eatk)+'\n')
+    editor.insert(tk.END, 'the '+enemy+' health regeneration is '+str(emhp)+'\n')
+    editor.insert(tk.END, 'the '+enemy+' armour is '+str(earm)+'\n')
+    editor.see
+    turn = 1
+start()
+def pattack():
+    global turn
+    if turn == 1:
+        global ehp
+        ehp -= (patk - earm)
+        turn = 0
+        status()
+        eturn()
+def pheal():
+    global turn
+    if turn == 1:
+        global php
+        php = php + preg
+        if php >= pmhp:
+            php = pmhp
+        turn = 0
+        status()
+        eturn()
+def eturn():
+    time.sleep(1)
+    global php
+    global edead
+    global turn
+    global ehp
+    global gold
+    global lvl
+    if ehp <= 0:
+        edead = 1
+        editor.insert(tk.END, 'the enemy has now died\n')
+        editor.see
+        gold += lvl*100
+        ehp = 0
+        turn = 0
+        php = pmhp
+        status()
+    if edead == 0:
+        editor.insert(tk.END,  str(enemy)+' attacks for '+str(eatk)+'\n'+'you blocked '+str(parm)+' damage\n')
+        editor.see(tk.END)
+        php -= (eatk-parm)
+        if php <= 0:
+            editor.insert(tk.END, 'YOU DIED!!!!, GAME OVER\n')
+            php = 0
+            status()
+        else:
+            turn = 1
+            status()       
+def buttona():
+    if turn == 1:
+        editor.insert(tk.END, 'you attack for '+str(patk)+'\n')
+        editor.see(tk.END)
+        pattack()
+def buttonh():
+    if turn == 1:
+        editor.insert(tk.END, 'you heal for '+str(preg)+'\n')
+        editor.see(tk.END)
+        pheal()
+def buttons():
+    editor.insert(tk.END, ' pmhp '+str(pmhp)+' patk '+str(patk)+' 
+button0 = tk.Button(root, width=15,bg='#FF9090', height=6, text=('attack'), 
+                command=buttona)
+button0.grid(row=1, column=0)
+button1 = tk.Button(root, width=15,bg='#90FF90', height=6, text = ('heal'), 
+                command=buttonh)
+button1.grid(row=1, column=1
+root.mainloop()
