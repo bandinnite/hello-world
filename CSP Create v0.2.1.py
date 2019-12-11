@@ -1,5 +1,6 @@
 import Tkinter as tk
 import time
+import random
 root = tk.Tk()
 root.wm_title('Dungeon Explorer')
 editor = tk.Text(root, width=75)
@@ -117,6 +118,13 @@ def buttonn():
         turn = 1
         selnew = 0
         editor.insert(tk.END, '\n')
+        editor.insert(tk.END, 'please wait...\n')
+        time.sleep(4)
+        editor.delete(1.0, tk.END)
+        for i in range (0,100):
+            editor.insert(tk.END, str(i))
+            time.sleep(.05)
+            editor.delete(1.0, tk.END)
         status()
     else:
         editor.insert(tk.END, 'please choose the level you would like to play\n using the up/down arrows \n please note that higher levels are significantly harder\n if you are not leveled high enough\n')
